@@ -1,0 +1,8 @@
+{
+  "name": "WebScrapperApp",
+  "version": "0.0.1",
+  "author": "Ivan Dobrovolsky",
+  "dependencies": {
+    "angular": "^1.4.7"
+  }
+}
