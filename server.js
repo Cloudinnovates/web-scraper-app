@@ -31,7 +31,7 @@ app.get('/scrap', function (req, res) {
 
 //Main route
 //Send our users to front-end
-app.get('*', function (req, res) {
+app.all('*', function (req, res) {
     res.sendFile(path.join(__dirname + 'public/app/index.html'))
 });
 

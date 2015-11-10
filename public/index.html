@@ -2,9 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Web Scrapper app</title>
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/stylesheets/angular-material.css"/>
+    <link rel="stylesheet" href="assets/stylesheets/style.css"/>
+
+    <!-- Library scripts -->
+    <script src="assets/scripts/angular.js"></script>
+    <script src="assets/scripts/angular-ui-router.js"></script>
+    <script src="assets/scripts/angular-aria.min.js"></script>
+    <script src="assets/scripts/angular-animate.js"></script>
+    <script src="assets/scripts/angular-material.js"></script>
+
+
+    <!-- Application scripts -->
+    <script src="app/app.js"></script>
+    <script src="app/app.controller.js"></script>
+
+    <!-- Scrapper scripts -->
+    <script src="app/scraper/scraper.module.js"></script>
+    <script src="app/scraper/scraper.controller.js"></script>
 </head>
-<body>
-Hello node!
+<body ng-app="main">
+<main>
+    <div ui-view>
+
+    </div>
+</main>
 </body>
 </html>
