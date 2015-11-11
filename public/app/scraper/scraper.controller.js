@@ -10,5 +10,11 @@
 
         vm.message = "ScraperControllerWorks";
 
+        vm.urlCount = 0;
+
+        vm.range = function(){
+            return new Array(vm.urlCount);
+        }
+
     }
 }());

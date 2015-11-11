@@ -1,1 +1,31 @@
-<a ui-sref="home">{{scraper.message}}</a>
+<div class="scraper">
+
+
+    <form name="numberForm">
+        <p>Please, enter the number of urls</p>
+        <div class="url-count">
+            <md-input-container>
+                <label>number</label>
+                <input type="number"
+                       name="input"
+                       ng-model="scraper.urlCount"
+                       min="0"
+                       max="50" required>
+            </md-input-container>
+        </div>
+
+
+    <span ng-show="numberForm.input.$valid">You entered {{scraper.urlCount}}</span>
+    <span ng-show="numberForm.input.$invalid">Make sure you entered valid number</span>
+    </form>
+
+
+        <md-input-container ng-repeat="i in scraper.range() track by $index">
+            <label>url {{$index + 1}}</label>
+            <input>
+        </md-input-container>
+
+
+
+
+</div>
