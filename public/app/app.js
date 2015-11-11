@@ -21,8 +21,8 @@
                     templateUrl: 'app/views/home.view.html',
                     controller: "MainController as main"
                 })
-                .state('scrap', {
-                    url: "/scrap",
+                .state('scraper', {
+                    url: "/scraper",
                     templateUrl: 'app/views/scraper.view.html',
                     controller: "ScraperController as scraper"
                 })
