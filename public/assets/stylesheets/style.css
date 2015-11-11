@@ -1,6 +1,34 @@
+header .toolbar{
+    position: relative;
+    background-color: rgb(198,40,40);
+}
+.fab-toolbar{
+    width: 100%;
+    position: absolute;
+    left:0;
+}
 .url-count{
     width: 100px;
 }
 md-input-container{
-    padding-bottom: 0px;
+    padding-bottom: 0;
+}
+.scraper{
+    padding-bottom: 10%;
+}
+.scraper .url-count{
+    margin: 0 auto;
+}
+.center{
+    text-align: center;
+}
+.invalid{
+    color: red;
+}
+.valid{
+    color: #43AC6A;
+}
+.cta-button span{
+    padding: 12px 25px;
+    font-size: 1.4em;
 }
