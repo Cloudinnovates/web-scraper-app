@@ -2,7 +2,7 @@
 "use strict";
 
 let config = require('./config'),
-    Scrapper = require('./app/scrapper'),
+    Scrapper = require('./app/scraper'),
     express = require('express'),
     morgan = require('morgan'),
     fs = require('fs');
@@ -14,8 +14,6 @@ let app = express();
 
 
 //APP CONFIGURATION
-
-
 
 
 let scraper = new Scrapper(['http://google.com','http://google.com'], 'title');
