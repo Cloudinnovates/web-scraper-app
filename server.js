@@ -2,7 +2,7 @@
 "use strict";
 
 let config = require('./config'),
-    scrapper = require('./app/scrapper'),
+    Scrapper = require('./app/scrapper'),
     express = require('express'),
     morgan = require('morgan'),
     fs = require('fs');
@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 //Used for requests that our front end will make
 app.use(express.static(__dirname  + '/public'));
 
-
+/*
 //Scrapper route
 app.get('/scrap', function (req, res) {
    res.send(scrapper.scrapper);
@@ -39,3 +39,12 @@ app.all('*', function (req, res) {
 //START THE SERVER
 app.listen(config.port);
 console.log('The server is running on port ' + config.port);
+
+console.log(Scrapper);
+*/
+
+let scraper = new Scrapper(config.urls, config.options);
+
+scraper.scrapeData().then(function (data) {
+    console.log(data);
+});
