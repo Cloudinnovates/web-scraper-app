@@ -16,6 +16,18 @@ let app = express();
 //APP CONFIGURATION
 
 
+
+
+let scraper = new Scrapper(['http://google.com','http://google.com'], 'title');
+let docs  = [];
+
+scraper.scrapeData().then(function (data) {
+    docs = data;
+    console.log(docs);
+}, function (err) {
+    console.log(err);
+});
+
 //Log all requests to the console
 app.use(morgan('dev'));
 
@@ -23,15 +35,14 @@ app.use(morgan('dev'));
 //Used for requests that our front end will make
 app.use(express.static(__dirname  + '/public'));
 
-/*
 //Scrapper route
-app.get('/scrap', function (req, res) {
-   res.send(scrapper.scrapper);
+app.get('/run', (req, res) => {
+   res.send(docs);
 });
 
 //Main route
 //Send our users to front-end
-app.all('*', function (req, res) {
+app.all('*', (req, res) => {
     res.sendFile(path.join(__dirname + 'public/app/index.html'))
 });
 
@@ -40,11 +51,3 @@ app.all('*', function (req, res) {
 app.listen(config.port);
 console.log('The server is running on port ' + config.port);
 
-console.log(Scrapper);
-*/
-
-let scraper = new Scrapper(config.urls, config.options);
-
-scraper.scrapeData().then(function (data) {
-    console.log(data);
-});
