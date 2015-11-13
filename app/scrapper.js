@@ -27,20 +27,40 @@ let urls = [
                                                                         "http://cad.edu.kpi.ua/tsoorin/2011/05/16/moї-predmeti/"
 ];
 
-function write(){
 
-    for(let url of urls){
-        xray(url, {
-            title: 'title',
-            logo: '.bns-logo img@src, .post img@src',
-            content : ['.entry-content p, .entry p, #content p, .art-postcontent p']
-        })(function (err, doc) {
 
-            if(err) throw err;
+let options = {
+    title: 'title',
+    logo: '.bns-logo img@src, .post img@src',
+    content : ['.entry-content p, .entry p, #content p, .art-postcontent p']
+};
 
-            console.log(doc);
+function scrapeDataForOneUrl(url, options){
+    return new Promise(function (resolve, reject) {
+        xray(url, options)(function (err, doc) {
+            if(err){reject(err)}
         })
-    }
+    });
+}
+function scrapeData(urls, options){
+    return new Promise(function (resolve, reject) {
+        let data = [];
+
+        for (let url of urls){
+            xray(url, options)(function (error, doc) {
+                if(error){
+                    reject('Something wend wrong!' + error);
+                }
+                data.push(doc);
+            })
+        }
+        resolve(data);
+    })
 }
 
-write();
+scrapeData(["http://google.com", "http://google.com"], 'title').then(function (data) {
+    console.log(data);
+}, function (error) {
+    console.log(error);
+});
+
