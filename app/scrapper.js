@@ -29,33 +29,18 @@ let urls = [
 
 function write(){
 
-    let data = [];
-
     for(let url of urls){
         xray(url, {
             title: 'title',
-            logo: '.bns-logo img@src',
-            content1: ['.entry-content p'],
-            content2: ['.entry p'],
-            content3: ['#content p'],
-            content4: ['.art-postcontent p']
+            logo: '.bns-logo img@src, .post img@src',
+            content : ['.entry-content p, .entry p, #content p, .art-postcontent p']
         })(function (err, doc) {
 
             if(err) throw err;
 
             console.log(doc);
-
         })
     }
-
 }
 
-function processData(doc){
-    for (let property in doc){
-
-        if (!doc.property){
-            delete !doc.property
-        }
-    }
-}
 write();
