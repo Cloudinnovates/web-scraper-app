@@ -32,7 +32,11 @@
                     required>
         </md-input-container>
         <!-- Validation notifications -->
+<<<<<<< HEAD
         <div class="validation-notifications center" ng-show="urlsForm.$dirty && numberForm.$valid">
+=======
+        <div class="validation-notifications center" ng-show="urlsForm.$dirty">
+>>>>>>> 8fb4a6ce811ba6c7dd34a6df18bfee5980cb27d5
             <h4 class="md-display-1 valid" ng-show="urlsForm.$valid">Great! Ready to start?</h4>
             <h4 class="md-display-1 invalid" ng-show="urlsForm.$invalid">Did you input {{scraper.urlCount > 1 ? "all urls" : "an url"}} correctly?!</h4>
 
