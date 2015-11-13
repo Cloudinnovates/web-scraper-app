@@ -5,6 +5,7 @@ module.exports = {
         logo: '.bns-logo img@src, .post img@src',
         content : ['.entry-content p, .entry p, #content p, .art-postcontent p']
     },
+    filename: 'app/data.json',
     urls: [
         "http://cad.edu.kpi.ua/petrenko/nove/",
         "http://cad.edu.kpi.ua/petrenko/doslidnicka-robota/",

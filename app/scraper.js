@@ -9,16 +9,8 @@ let xRay = require("x-ray"),
 //Defining the class Scraper
 class Scraper{
 
-    //The constructor which takes urls and options
-    constructor(urls, options){
-        this.urls = urls;
-        this.options =  options;
-    }
-
     //Implementing main method for scraping data
-    scrapeData(){
-        //Getting the reference at options property
-        var options = this.options;
+    scrapeData(urls, options){
 
         //Function helper which takes a single url, makes a request and returns a promise
         function scrapeDataForOneUr(url){
@@ -35,7 +27,7 @@ class Scraper{
 
         //The function returns a promise that resolves when all of the promises in the iterable
         //argument have resolved or rejects with the reason of the first passed promise that rejects
-        return Promise.all(this.urls.map(scrapeDataForOneUr));
+        return Promise.all(urls.map(scrapeDataForOneUr));
     }
 }
 

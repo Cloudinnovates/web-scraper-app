@@ -4,7 +4,7 @@
     angular.module('scraper')
         .controller("ScraperController", ScraperController);
 
-    function ScraperController(){
+    function ScraperController(ScraperService){
 
         let vm = this;
 
@@ -17,20 +17,16 @@
             return new Array(vm.urlCount);
         };
 
-        //All valid urls will be stored in this object
-        vm.urls = {};
-
-        //Convert urls from the temp list to the object
-        vm.convert = function () {
-            vm.list.forEach(function (url, index) {
-               vm.urls['url' + (index + 1)] = url;
-            });
-        };
+        vm.message = 'Not finished!';
 
         //The function executes once the urlsForm is submitted
-        vm.start = function () {
-            vm.convert();
-            console.log(vm.urls + vm.urlCount);
+        vm.startScraping = function () {
+            vm.processing = true;
+
+            ScraperService.sendData(vm.list)
+                .success((message) => {
+                    vm.message = message;
+                });
         }
 
     }

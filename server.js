@@ -2,40 +2,59 @@
 "use strict";
 
 let config = require('./config'),
-    Scrapper = require('./app/scraper'),
+    Scraper = require('./app/scraper'),
     express = require('express'),
     morgan = require('morgan'),
-    fs = require('fs');
+    FileWorker = require('./app/fileWorker'),
+    bodyParser = require('body-parser');
 
 
 
-//Initialize the app
-let app = express();
+//Initialize the app and needed modules
+let app = express(),
+    fileWorker = new FileWorker(),
+    scraper = new Scraper();
 
 
-//APP CONFIGURATION
+//Parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-
-let scraper = new Scrapper(['http://google.com','http://google.com'], 'title');
-let docs  = [];
-
-scraper.scrapeData().then(function (data) {
-    docs = data;
-    console.log(docs);
-}, function (err) {
-    console.log(err);
-});
+//Parse application/json
+app.use(bodyParser.json())
 
 //Log all requests to the console
 app.use(morgan('dev'));
+
 
 //Set static files location
 //Used for requests that our front end will make
 app.use(express.static(__dirname  + '/public'));
 
+
+
 //Scrapper route
-app.get('/run', (req, res) => {
-   res.send(docs);
+app.post('/run', (req, res) => {
+
+    let urls = req.body;
+
+    scraper.scrapeData(urls, config.options).then( (data) => {
+        fileWorker.write(config.filename, data).then((message) => {
+            res.json({
+                success: true,
+                message: message
+            });
+            }, (err) => {
+            res.json({
+                success: false,
+                message: err
+            })
+        })
+    }, (err) => {
+        res.json({
+            success: false,
+            message: err
+        })
+    })
 });
 
 //Main route

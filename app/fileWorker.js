@@ -6,30 +6,23 @@ let fs = require('fs');
 
 //Define the class FileWorker
 class FileWorker{
-    constructor(filename, data){
-        this.filename = filename;
-        this.data = data;
-    }
 
     //Function that writes the file
-    write(){
-        let data = this.data;
+    write(filename, data){
         return new Promise( (resolve, reject) => {
-            fs.writeFile(this.filename, data, (err) => {
+            fs.writeFile(filename, JSON.stringify(data), (err) => {
                 if (err) reject(err);
-                //console.log("The file was successfully written!");
-                resolve("Success!");
+                resolve("Successfully written to the file!");
             })
         })
     }
 
     //Function that reads the file
-    read(){
+    read(filename){
         return new Promise ((resolve, reject) => {
-            fs.readFile(this.filename, 'utf8', (err, data) => {
+            fs.readFile(filename, 'utf8', (err, data) => {
                 if (err) reject(err);
                 resolve(data);
-                //console.log("The file was successfully read!");
             })
         })
     }
