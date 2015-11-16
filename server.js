@@ -12,15 +12,17 @@ let config = require('./config'),
 
 //Initialize the app and needed modules
 let app = express(),
+
+    //Instance of FileWorker for working with the file where we store the data
     fileWorker = new FileWorker(),
     scraper = new Scraper();
 
 
 //Parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //Parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 //Log all requests to the console
 app.use(morgan('dev'));
@@ -31,14 +33,15 @@ app.use(morgan('dev'));
 app.use(express.static(__dirname  + '/public'));
 
 
-
 //Scrapper route
-app.post('/run', (req, res) => {
+app.post('/process', (req, res) => {
 
     let urls = req.body;
 
     scraper.scrapeData(urls, config.options).then( (data) => {
         fileWorker.write(config.filename, data).then((message) => {
+
+            //Success message to the client
             res.json({
                 success: true,
                 message: message
@@ -55,6 +58,22 @@ app.post('/run', (req, res) => {
             message: err
         })
     })
+});
+
+app.get('/download', (req, res) => {
+
+    let fileStream = fileWorker.createFileStream(config.filename);
+
+    fileStream.on('error', (err) => {
+        //Error handling
+        res.json({
+            success: false,
+            message: err
+        });
+    });
+
+    fileStream.pipe(res);
+
 });
 
 //Main route

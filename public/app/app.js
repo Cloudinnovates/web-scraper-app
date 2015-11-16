@@ -4,7 +4,8 @@
     let app = angular.module('main', [
         "scraper",
         "ngMaterial",
-        "ui.router"
+        "ui.router",
+        "ngFileSaver"
     ]);
 
 

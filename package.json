@@ -4,6 +4,7 @@
   "author": "Ivan Dobrovolsky",
   "dependencies": {
     "angular": "^1.4.7",
+    "angular-file-saver": "^1.0.1",
     "angular-ui-router": "^0.2.15",
     "body-parser": "^1.14.1",
     "express": "^4.13.3",

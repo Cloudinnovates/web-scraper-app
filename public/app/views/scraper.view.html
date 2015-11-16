@@ -3,7 +3,7 @@
     <h2 class="md-display-1 center">Enter please a number of URLs from 1 to 20</h2>
 
     <!-- The form for inputting a number of urls-->
-    <form name="numberForm" novalidate>
+    <form name="numberForm" novalidate >
         <div class="url-count">
             <md-input-container>
                 <label>number</label>
@@ -16,16 +16,17 @@
             </md-input-container>
         </div>
         <!-- Validation notifications -->
-        <div class="validation-notifications" ng-show="numberForm.input.$dirty">
+        <div class="notifications" ng-show="numberForm.input.$dirty">
             <h2 class="md-display-1 center valid" ng-show="numberForm.input.$valid">Ok, now enter {{scraper.urlCount}} {{scraper.urlCount > 1 ? "urls" : "url"}} below</h2>
             <h2 class="md-display-1 center invalid" ng-show="numberForm.input.$invalid">Make sure you entered a valid number!</h2>
         </div>
 
     </form>
 
-    <p>{{scraper.message}}</p>
+    <p>ProcessingStatus: {{scraper.processingStatus}}</p>
+    <p>DownloadingStatus: {{scraper.downloadingStatus}}</p>
     <!-- The form for inputting those urls-->
-    <form name="urlsForm" novalidate ng-submit="scraper.startScraping()">
+    <form name="urlsForm" ng-submit="scraper.process()"  novalidate>
         <md-input-container ng-show="numberForm.input.$valid" ng-repeat="i in scraper.range() track by $index">
             <label >url {{$index + 1}}</label>
             <input  type="url"
@@ -35,14 +36,17 @@
         <!-- Validation notifications -->
 
         <div class="validation-notifications center" ng-show="urlsForm.$dirty && numberForm.$valid">
-
-        <div class="validation-notifications center" ng-show="urlsForm.$dirty">
-
-            <h4 class="md-display-1 valid" ng-show="urlsForm.$valid">Great! Ready to start?</h4>
-            <h4 class="md-display-1 invalid" ng-show="urlsForm.$invalid">Did you input {{scraper.urlCount > 1 ? "all urls" : "an url"}} correctly?!</h4>
-
-            <md-button ng-if="urlsForm.$valid" type="submit" class="md-raised cta-button md-warn md-hue-2" >Scrape</md-button>
+            <div class="notifications center" ng-if="urlsForm.$dirty">
+                <h4 class="md-display-1 valid" ng-if="urlsForm.$valid">Great! Ready to start?</h4>
+                <h4 class="md-display-1 invalid" ng-if="urlsForm.$invalid">Did you input {{scraper.urlCount > 1 ? "all urls" : "an url"}} correctly?!</h4>
+                <md-button ng-if="urlsForm.$valid" type="submit" class="md-raised cta-button md-warn md-hue-2" >Scrape</md-button>
+            </div>
         </div>
     </form>
+    <div class="notifications center" ng-if="urlsForm.$submitted && numberForm.$valid && !scraper.isProcessing" >
+        <h4 class="md-display-1 valid">Here you are! Download the file.</h4>
+        <md-button ng-click="scraper.download()" class="md-raised cta-button md-primary">Download</md-button>
+    </div>
+
 
 </div>

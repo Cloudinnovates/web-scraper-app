@@ -7,7 +7,7 @@ let fs = require('fs');
 //Define the class FileWorker
 class FileWorker{
 
-    //Function that writes the file
+    //Function that writes the data to the file
     write(filename, data){
         return new Promise( (resolve, reject) => {
             fs.writeFile(filename, JSON.stringify(data), (err) => {
@@ -17,7 +17,7 @@ class FileWorker{
         })
     }
 
-    //Function that reads the file
+    //Function that reads the data from the file
     read(filename){
         return new Promise ((resolve, reject) => {
             fs.readFile(filename, 'utf8', (err, data) => {
@@ -25,6 +25,11 @@ class FileWorker{
                 resolve(data);
             })
         })
+    }
+
+    //Function that creates and returns FileStream
+    createFileStream(filename){
+        return fs.createReadStream(filename, {bufferSize: 64 * 1024});
     }
 }
 

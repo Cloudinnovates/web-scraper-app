@@ -2,9 +2,9 @@
     "use strict";
 
     angular.module('scraper')
-        .controller("ScraperController", ScraperController);
+        .controller("ScraperController", ['ScraperService', 'FileSaver', 'Blob', ScraperController]);
 
-    function ScraperController(ScraperService){
+    function ScraperController(ScraperService, FileSaver, Blob){
 
         let vm = this;
 
@@ -17,17 +17,31 @@
             return new Array(vm.urlCount);
         };
 
-        vm.message = 'Not finished!';
+        vm.processingStatus = 'Not finished!';
+        vm.downloadingStatus = 'Not finished!';
+        vm.isProcessing = false;
+        vm.isReady = false;
 
         //The function executes once the urlsForm is submitted
-        vm.startScraping = function () {
-            vm.processing = true;
+        vm.process = function () {
+            vm.isProcessing = true;
 
             ScraperService.sendData(vm.list)
                 .success((message) => {
-                    vm.message = message;
+                    vm.processingStatus = message;
+                    vm.isProcessing = false;
+                    vm.isReady = true;
                 });
-        }
+        };
 
+        vm.download = function(){
+            ScraperService.receiveData()
+                .success((data) => {
+                    vm.downloadingStatus = "Done!";
+
+                    var dataToSave = new Blob([data], { type: 'text/plain;charset=utf-8' });
+                    FileSaver.saveAs(dataToSave, 'data.txt');
+                })
+        }
     }
 }());

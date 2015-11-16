@@ -8,12 +8,12 @@
 
                 //Function for sending data
                 function sendData(data){
-                    return $http.post('/run', data);
+                    return $http.post('/process', data);
                 }
 
                 //Function for receiving data
                 function receiveData(){
-                    return $http.get('/run');
+                    return $http.get('/download');
                 }
 
                 //Return an object with references to those methods
