@@ -10,7 +10,7 @@ class FileWorker{
     //Function that writes the data to the file
     write(filename, data){
         return new Promise( (resolve, reject) => {
-            fs.writeFile(filename, JSON.stringify(data), (err) => {
+            fs.writeFile(filename, data, (err) => {
                 if (err) reject(err);
                 resolve("Successfully written to the file!");
             })

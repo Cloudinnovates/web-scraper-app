@@ -6,7 +6,8 @@ let config = require('./config'),
     express = require('express'),
     morgan = require('morgan'),
     FileWorker = require('./app/fileWorker'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    DataParser = require('./app/dataParser');
 
 
 
@@ -15,7 +16,8 @@ let app = express(),
 
     //Instance of FileWorker for working with the file where we store the data
     fileWorker = new FileWorker(),
-    scraper = new Scraper();
+    scraper = new Scraper(),
+    dataParser = new DataParser();
 
 
 //Parse application/x-www-form-urlencoded
@@ -39,7 +41,7 @@ app.post('/process', (req, res) => {
     let urls = req.body;
 
     scraper.scrapeData(urls, config.options).then( (data) => {
-        fileWorker.write(config.filename, data).then((message) => {
+        fileWorker.write(config.filename, dataParser.parse(data)).then((message) => {
 
             //Success message to the client
             res.json({
