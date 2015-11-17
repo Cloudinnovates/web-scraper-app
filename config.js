@@ -4,5 +4,5 @@ module.exports = {
         title: 'title',
         content : ['.entry-content p, .entry p, #content p, .art-postcontent p']
     },
-    filename: 'app/data.json'
+    filename: 'app/data.txt'
 };

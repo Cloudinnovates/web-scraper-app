@@ -28,6 +28,9 @@ md-input-container{
 .valid{
     color: #43AC6A;
 }
+.pristine{
+    color: rgb(63,81,181);
+}
 .cta-button span{
     padding: 12px 25px;
     font-size: 1.4em;
