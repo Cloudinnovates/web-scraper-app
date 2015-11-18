@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Web Scrapper app</title>
+
+    <!-- favicon -->
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
 
     <!-- Stylesheets -->
@@ -27,9 +29,11 @@
     <script src="app/scraper/scraper.controller.js"></script>
     <script src="app/scraper/scraper.service.js"></script>
 </head>
+
+<!-- Angular app lives here -->
 <body ng-app="main">
 <header>
-    <md-toolbar class=" toolbar" >
+    <md-toolbar class="toolbar">
         <div class="md-toolbar-tools">
             <h2>
                 <span>WebScraper Application</span>
@@ -54,6 +58,8 @@
         </div>
     </md-toolbar>
 </header>
+
+<!-- Main section. Angular routes will be placed here -->
 <main>
     <div ui-view>
 

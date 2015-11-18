@@ -1,11 +1,13 @@
-<!-- scraper template -->
+<!-- scraper template template-->
 <div class="scraper">
 
-    <div class="forms" ng-hide="scraper.isProcessing || scraper.isReady || scraper.isDone">
-        <h2 class="md-display-1 center">Enter please a number of URLs from 1 to 20</h2>
+    <!-- Application forms section -->
+    <section class="forms" ng-hide="scraper.isProcessing || scraper.isReady || scraper.isDone">
+        <h2 class="md-display-1 center pristine">Enter please a number of URLs from 1 to 20</h2>
+
         <!-- The form for inputting a number of urls-->
         <form name="numberForm" novalidate >
-            <div class="url-count">
+            <div class="url-count center-block">
                 <md-input-container>
                     <label>number</label>
                     <input type="number"
@@ -16,12 +18,12 @@
                            required>
                 </md-input-container>
             </div>
-            <!-- Validation notifications -->
+
+            <!-- Validation notifications for the number of urls-->
             <div class="notifications" ng-show="numberForm.input.$dirty">
                 <h2 class="md-display-1 center valid" ng-show="numberForm.input.$valid">Ok, now enter {{scraper.urlCount}} {{scraper.urlCount > 1 ? "urls" : "url"}} below</h2>
                 <h2 class="md-display-1 center invalid" ng-show="numberForm.input.$invalid">Make sure you entered a valid number!</h2>
             </div>
-
         </form>
 
       <!-- The form for inputting those urls-->
@@ -32,34 +34,35 @@
                         ng-model="scraper.list[$index]"
                         required>
             </md-input-container>
-            <!-- Validation notifications -->
 
-            <div class="validation-notifications center" ng-show="urlsForm.$dirty && numberForm.$valid">
-                <div class="notifications center" ng-if="urlsForm.$dirty">
-                    <h4 class="md-display-1 valid" ng-if="urlsForm.$valid">Great! Ready to start?</h4>
-                    <h4 class="md-display-1 invalid" ng-if="urlsForm.$invalid">Did you input {{scraper.urlCount > 1 ? "all urls" : "an url"}} correctly?!</h4>
-                    <md-button ng-if="urlsForm.$valid" type="submit" class="md-raised cta-button md-warn md-hue-2" >Scrape</md-button>
+            <!-- Validation notifications for those urls -->
+            <div class="notifications center" ng-show="urlsForm.$dirty && numberForm.$valid">
+                <div class="notifications center" ng-show="urlsForm.$dirty">
+                    <h4 class="md-display-1 valid" ng-show="urlsForm.$valid">Great! Ready to start?</h4>
+                    <h4 class="md-display-1 invalid" ng-show="urlsForm.$invalid">Did you input {{scraper.urlCount > 1 ? "all urls" : "an url"}} correctly?!</h4>
+                    <md-button ng-show="urlsForm.$valid" type="submit" class="md-raised cta-button md-warn md-hue-2" >Scrape</md-button>
                 </div>
             </div>
         </form>
-    </div>
+    </section>
 
-    <div class="processing center" ng-show="scraper.isProcessing">
+    <!-- Scraping processing section-->
+    <section class="processing center" ng-show="scraper.isProcessing">
         <h4 class="md-display-1 pristine">Processing...</h4>
-        <md-progress-circular class="md-warn md-hue-3" style="margin: 0 auto" md-mode="indeterminate" md-diameter="100"></md-progress-circular>
-    </div>
+        <md-progress-circular class="md-warn md-hue-3 center-block"  md-mode="indeterminate" md-diameter="80"></md-progress-circular>
+    </section>
 
-    <div class="result" ng-show="urlsForm.$submitted && numberForm.$valid && scraper.isReady">
+    <!-- Result section -->
+    <section class="result" ng-show="urlsForm.$submitted && numberForm.$valid && scraper.isReady">
         <div class="notifications center"  >
             <h4 class="md-display-1 valid">Here you are! Download the file.</h4>
             <md-button ng-click="scraper.download()" class="md-raised cta-button md-primary">Download</md-button>
         </div>
-    </div>
+    </section>
 
-    <div class="done center" ng-show="scraper.isDone">
-        <md-button class="md-warn md-raised .cta-button" style="margin: 100px auto">Back</md-button>
-    </div>
-
-
-
+    <!-- Done section -->
+    <section class="done center top-space" ng-show="scraper.isDone">
+        <h4 class="md-display-1 valid pristine">Finished. See you!</h4>
+        <md-button class="md-warn md-raised " ui-sref="home">Back</md-button>
+    </section>
 </div>

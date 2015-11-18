@@ -1,17 +1,15 @@
 (function () {
     "use strict";
 
-    let app = angular.module('main', [
+    angular.module('main', [
         "scraper",
         "ngMaterial",
         "ui.router",
         "ngFileSaver"
-    ]);
-
+    ])
 
     //Routes configurations
-    app
-        .config(function($stateProvider, $urlRouterProvider) {
+    .config(function($stateProvider, $urlRouterProvider) {
 
             //For any unmatched url redirect to the home page
             $urlRouterProvider.otherwise("/");

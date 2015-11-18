@@ -1,22 +1,5 @@
-header .toolbar{
-    position: relative;
-    background-color: rgb(198,40,40);
-}
-.fab-toolbar{
-    width: 100%;
-    position: absolute;
-    left:0;
-}
-.url-count{
-    width: 100px;
-}
-md-input-container{
-    padding-bottom: 0;
-}
-.scraper{
-    padding-bottom: 10%;
-}
-.scraper .url-count{
+/*STYLE GUIDE RULES*/
+.center-block{
     margin: 0 auto;
 }
 .center{
@@ -31,7 +14,30 @@ md-input-container{
 .pristine{
     color: rgb(63,81,181);
 }
-.cta-button span{
-    padding: 12px 25px;
-    font-size: 1.4em;
+.top-space{
+    margin-top: 10%;
 }
+
+
+/*APPLICATION RULES*/
+header .toolbar{
+    position: relative;
+    background-color: rgb(198,40,40);
+}
+header .toolbar .fab-toolbar{
+    width: 100%;
+    position: absolute;
+    left:0;
+}
+
+
+.scraper{
+    padding-bottom: 10%;
+}
+.scraper .url-count{
+    width: 100px;
+}
+.scraper  md-input-container{
+    padding-bottom: 0;
+}
+
