@@ -35,7 +35,7 @@ app.use(morgan('dev'));
 app.use(express.static(__dirname  + '/public'));
 
 
-//Scrapper route
+//Scraper processing route
 app.post('/process', (req, res) => {
 
     let urls = req.body;
@@ -62,6 +62,7 @@ app.post('/process', (req, res) => {
     })
 });
 
+//Scraper downloading route
 app.get('/download', (req, res) => {
 
     let fileStream = fileWorker.createFileStream(config.filename);

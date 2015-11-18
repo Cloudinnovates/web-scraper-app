@@ -1,5 +1,6 @@
 "use strict";
 
+//Define DataParser class for parsing the scraped data into the needed format
 class DataParser{
 
     //Method for parsing the data and representing it in common txt format
