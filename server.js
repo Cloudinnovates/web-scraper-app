@@ -87,6 +87,7 @@ app.all('*', (req, res) => {
 
 
 //START THE SERVER
-app.listen(config.port);
+let server = app.listen(config.port);
 console.log('The server is running on port ' + config.port);
 
+module.exports = server;
