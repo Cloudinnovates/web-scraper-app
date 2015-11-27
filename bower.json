@@ -1,0 +1,25 @@
+{
+  "name": "WebScrapperApp",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Ivan Dobrovolsky"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/IvanDobrovolsky/web-scraper-app",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-material": "~0.11.4",
+    "angular-file-saver": "~1.0.1"
+  }
+}
