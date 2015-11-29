@@ -1,46 +1,55 @@
 "use strict";
 //NEEDED DEPENDENCIES
-let config = require('./config'),
+const config = require('./config'),
     gulp = require('gulp'),
     inject = require('gulp-inject'),
     nodemon = require('gulp-nodemon'),
     browserSync = require('browser-sync').create(),
-    wiredep = require('wiredep').stream;
+    wiredep = require('wiredep').stream,
+    chalk = require('chalk');
 
 
 //GULP CONFIGURATION
 //Directories and files
-let index = './public/index.html',
+const index = './public/index.html',
     server = 'server.js',
-    client = './public';
+    client = './public',
+    port = config.port;
 
-
+//Logging messages
+function log(message){
+    console.log(chalk.white.bold.bgBlue(message));
+}
 
 
 //***********GULP TASKS**************
 
 //RESTART SERVER
-gulp.task("start", () => {
-    nodemon({
+gulp.task("start-server", ['inject-bower'], () => {
+    let options = {
         script: server,
-        ext: 'js html',
-        env: { 'NODE_ENV': 'development' }
-    })
+        delayTime: 1,
+        env: {
+            PORT: port,
+            'NODE_ENV': "development",
+            watch: server
+        }
+    };
+
+    log("***STARTING NODE SEVER***");
+    return nodemon(options);
 });
 
-//RELOAD BROWSER
+//BROWSER SYNCHRONIZATION. RELOAD BROWSER.
 gulp.task("reload", () => {
-    let reload = browserSync.reload;
-    reload();
+
 });
+
 
 //INJECT BOWER LIBRARIES TASK
 gulp.task('inject-bower', () => {
-
+    log("***INJECTING BOWER LIBRARIES***");
     let options = {};
-
-    console.log("Works...");
-
     return gulp
         .src(index)
         .pipe(wiredep(options))

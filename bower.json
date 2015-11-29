@@ -20,6 +20,7 @@
   "dependencies": {
     "angular": "~1.4.8",
     "angular-material": "~0.11.4",
-    "angular-file-saver": "~1.0.1"
+    "angular-file-saver": "~1.0.1",
+    "angular-ui-router": "~0.2.15"
   }
 }

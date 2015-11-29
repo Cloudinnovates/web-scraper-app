@@ -2,20 +2,21 @@
   "name": "WebScrapperApp",
   "version": "0.0.1",
   "author": "Ivan Dobrovolsky",
-  "scripts" : {
-    "inject": "gulp inject"
+  "scripts": {
+    "start": "gulp start-server"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "fs": "0.0.2",
     "gulp": "^3.9.0",
-    "gulp-nodemon": "^2.0.4",
     "morgan": "^1.6.1",
+    "path": "^0.12.7",
     "x-ray": "^2.0.2"
   },
   "devDependencies": {
     "browser-sync": "^2.10.0",
+    "chalk": "^1.1.1",
     "gulp-inject": "^3.0.0",
     "gulp-nodemon": "^2.0.4",
     "wiredep": "^2.2.2"

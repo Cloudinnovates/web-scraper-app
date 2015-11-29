@@ -1,18 +1,19 @@
 //BASE SETUP
 "use strict";
 
-let config = require('./config'),
+const config = require('./config'),
     Scraper = require('./app/scraper'),
     express = require('express'),
     morgan = require('morgan'),
     FileWorker = require('./app/fileWorker'),
     bodyParser = require('body-parser'),
-    DataParser = require('./app/dataParser');
+    DataParser = require('./app/dataParser'),
+    path = require('path');
 
 
 
 //Initialize the app and needed modules
-let app = express(),
+const app = express(),
 
     //Instance of FileWorker for working with the file where we store the data
     fileWorker = new FileWorker(),
@@ -34,7 +35,8 @@ app.use(morgan('dev'));
 //Used for requests that our front end will make
 app.use(express.static(__dirname  + '/public'));
 
-
+//Used for serving static bower_components
+app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 //Scraper processing route
 app.post('/process', (req, res) => {
 
@@ -82,9 +84,8 @@ app.get('/download', (req, res) => {
 //Main route
 //Send our users to front-end
 app.all('*', (req, res) => {
-    res.sendFile(path.join(__dirname + config.index))
+    res.sendFile(path.join(__dirname + 'index.html'))
 });
-
 
 //START THE SERVER
 app.listen(config.port);
