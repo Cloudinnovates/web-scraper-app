@@ -9,7 +9,9 @@ const port = require('./config').port || process.env.PORT,
     ngAnnotate = require('gulp-ng-annotate'),
     concat = require('gulp-concat'),
     order = require('gulp-order'),
-    del = require('del');
+    del = require('del'),
+    sourcemaps = require('gulp-sourcemaps'),
+    babel = require('gulp-babel');
 
 
 
@@ -112,13 +114,17 @@ gulp.task("browser-sync", ['nodemon'], () => {
     log("*** BROWSER SYNC IS WORKING ***");
 });
 
-//<===== CONCATENATING ANGULAR =====>
+//<===== CONCATENATING ANGULAR AND COMPILING TO ES5 =====>
 gulp.task('concat-angular', () => {
 
     //Cleaning the main app.js file before concatenation
     del.sync(['public/app/app.js']);
 
     return gulp.src(config.angular)
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
         .pipe(ngAnnotate())
         .pipe(concat('app.js'))
         .pipe(gulp.dest(config.client + config.app))

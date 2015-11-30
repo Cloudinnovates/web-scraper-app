@@ -1,67 +1,63 @@
+"use strict";
+
 (function () {
     "use strict";
 
-    angular.module('main', [
-        "scraper",
-        "ngMaterial",
-        "ui.router",
-        "ngFileSaver"
-    ])
+    angular.module('main', ["scraper", "ngMaterial", "ui.router", "ngFileSaver"])
 
     //Routes configurations
-    .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
+    .config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
 
-            //For any unmatched url redirect to the home page
-            $urlRouterProvider.otherwise("/");
+        //For any unmatched url redirect to the home page
+        $urlRouterProvider.otherwise("/");
 
-            $stateProvider
-                .state('home', {
-                    url: '/',
-                    templateUrl: 'app/views/home.view.html',
-                    controller: "MainController as main"
-                })
-                .state('scraper', {
-                    url: "/scraper",
-                    templateUrl: 'app/views/scraper.view.html',
-                    controller: "ScraperController as scraper"
-                })
-        }])
-}());
+        $stateProvider.state('home', {
+            url: '/',
+            templateUrl: 'app/views/home.view.html',
+            controller: "MainController as main"
+        }).state('scraper', {
+            url: "/scraper",
+            templateUrl: 'app/views/scraper.view.html',
+            controller: "ScraperController as scraper"
+        });
+    }]);
+})();
+"use strict";
+
 (function () {
     "use strict";
 
-    angular
-        .module('main')
-        .controller("MainController", [MainController]);
+    angular.module('main').controller("MainController", [MainController]);
 
-    function MainController(){
-        let vm = this;
+    function MainController() {
+        var vm = this;
 
         vm.message = "MainControllerWorks";
     }
-}());
+})();
+'use strict';
+
 (function () {
 
     angular.module('scraper', []);
+})();
+"use strict";
 
-}());
 (function () {
     "use strict";
 
-    angular
-        .module('scraper')
-        .controller("ScraperController", ['ScraperService', 'FileSaver', 'Blob', "$mdToast", ScraperController]);
+    angular.module('scraper').controller("ScraperController", ['ScraperService', 'FileSaver', 'Blob', "$mdToast", ScraperController]);
 
-    function ScraperController(ScraperService, FileSaver, Blob, $mdToast){
+    function ScraperController(ScraperService, FileSaver, Blob, $mdToast) {
 
-        let vm = this;
+        var vm = this;
 
         //Working with URLs
         vm.urlCount = 0; //number of URLs
-        vm.list = [];    //URLs themselves
+        vm.list = []; //URLs themselves
 
         //A helper function for iterating urls
-        vm.range = function(){
+        vm.range = function () {
             return new Array(vm.urlCount);
         };
 
@@ -74,57 +70,49 @@
         vm.process = function () {
             vm.isProcessing = true;
 
-            ScraperService.sendData(vm.list)
-                .success((response) => {
-                    vm.isProcessing = false;
-                    vm.isReady = true;
+            ScraperService.sendData(vm.list).success(function (response) {
+                vm.isProcessing = false;
+                vm.isReady = true;
 
-                    //Toastr notification
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .content(response.message)
-                            .action('OK')
-                            .highlightAction(false)
-                            .position('bottom right')
-                    );
-                });
+                //Toastr notification
+                $mdToast.show($mdToast.simple().content(response.message).action('OK').highlightAction(false).position('bottom right'));
+            });
         };
 
         //The function executes once the scraping processed is finished
-        vm.download = function(){
-            ScraperService.receiveData()
-                .success((data) => {
-                    vm.isDone = true;
-                    vm.isReady = false;
-                    var dataToSave = new Blob([data], { type: 'text/plain;charset=utf-8' });
-                    FileSaver.saveAs(dataToSave, 'data.txt');
-                })
-        }
+        vm.download = function () {
+            ScraperService.receiveData().success(function (data) {
+                vm.isDone = true;
+                vm.isReady = false;
+                var dataToSave = new Blob([data], { type: 'text/plain;charset=utf-8' });
+                FileSaver.saveAs(dataToSave, 'data.txt');
+            });
+        };
     }
-}());
+})();
+'use strict';
+
 (function () {
-    "use strict";
+    "use strict"
 
     //Angular service for communicating with back end
-    angular
-        .module('scraper')
-        .factory('ScraperService', ($http) => {
+    ;
+    angular.module('scraper').factory('ScraperService', ["$http", function ($http) {
 
-                //Function for sending data
-                function sendData(data){
-                    return $http.post('/process', data);
-                }
+        //Function for sending data
+        function sendData(data) {
+            return $http.post('/process', data);
+        }
 
-                //Function for receiving data
-                function receiveData(){
-                    return $http.get('/download');
-                }
+        //Function for receiving data
+        function receiveData() {
+            return $http.get('/download');
+        }
 
-                //Return an object with references to those methods
-                return {
-                    sendData: sendData,
-                    receiveData: receiveData
-                }
-            })
-}());
-
+        //Return an object with references to those methods
+        return {
+            sendData: sendData,
+            receiveData: receiveData
+        };
+    }]);
+})();
