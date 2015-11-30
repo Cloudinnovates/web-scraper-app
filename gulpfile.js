@@ -25,12 +25,17 @@ const config = {
     gulpfile: './gulpfile.js',
     app: '/app/',
     all: '/**/*.*',
-    angular: [
+    /*
+    angularES5: [
         'public/app/app.module.js',
         'public/app/app.controller.js',
         'public/app/scraper/scraper.module.js',
         'public/app/scraper/scraper.controller.js',
         'public/app/scraper/scraper.service.js'
+    ],*/
+    angularES6: [
+        'public/app/main.js',
+        'public/app/scraper.js',
     ]
 };
 
@@ -120,13 +125,13 @@ gulp.task('concat-angular', () => {
     //Cleaning the main app.js file before concatenation
     del.sync(['public/app/app.js']);
 
-    return gulp.src(config.angular)
+    return gulp.src(config.angularES6)
         .pipe(sourcemaps.init())
         .pipe(babel({
             presets: ['es2015']
         }))
         .pipe(ngAnnotate())
-        .pipe(concat('app.js'))
+        .pipe(concat('app.bundle.js'))
         .pipe(gulp.dest(config.client + config.app))
 });
 
