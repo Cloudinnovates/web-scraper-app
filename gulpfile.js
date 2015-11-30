@@ -2,11 +2,16 @@
 //<=====NEEDED DEPENDENCIES=====>
 const port = require('./config').port || process.env.PORT,
     gulp = require('gulp'),
-    inject = require('gulp-inject'),
     nodemon = require('gulp-nodemon'),
     browserSync = require('browser-sync'),
     wiredep = require('wiredep').stream,
-    chalk = require('chalk');
+    chalk = require('chalk'),
+    ngAnnotate = require('gulp-ng-annotate'),
+    concat = require('gulp-concat'),
+    order = require('gulp-order'),
+    del = require('del');
+
+
 
 
 //<=====GULP CONFIGURATION=====>
@@ -16,8 +21,15 @@ const config = {
     server: './server.js',
     client: './public',
     gulpfile: './gulpfile.js',
-    app: './app/',
-    all: '/**/*.*'
+    app: '/app/',
+    all: '/**/*.*',
+    angular: [
+        'public/app/app.module.js',
+        'public/app/app.controller.js',
+        'public/app/scraper/scraper.module.js',
+        'public/app/scraper/scraper.controller.js',
+        'public/app/scraper/scraper.service.js'
+    ]
 };
 
 //Logger functions for messages and errors
@@ -67,10 +79,12 @@ gulp.task("nodemon", (cb) => {
                 cb();
                 started = true;
             }
-            log("***STARTING NODE SERVER***");
+            log("***STARTING NODE SERVER + " + new Date() + "***");
         })
         .on('restart', (files) => {
             log("*** RESTARTING NODE SERVER ON FILES CHANGES: " + files + " ***");
+            //Also reload browsers on node server restart
+            browserSync.reload({stream: false});
         })
         .on('crash', () => {
             logError("***NODE SERVER IS CRASHED***");
@@ -98,6 +112,17 @@ gulp.task("browser-sync", ['nodemon'], () => {
     log("*** BROWSER SYNC IS WORKING ***");
 });
 
+//<===== CONCATENATING ANGULAR =====>
+gulp.task('concat-angular', () => {
+
+    //Cleaning the main app.js file before concatenation
+    del.sync(['public/app/app.js']);
+
+    return gulp.src(config.angular)
+        .pipe(ngAnnotate())
+        .pipe(concat('app.js'))
+        .pipe(gulp.dest(config.client + config.app))
+});
 
 //<===== DEFAULT TASK =====>
 gulp.task('default', ['browser-sync'], () => {});
