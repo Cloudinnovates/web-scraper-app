@@ -8,10 +8,7 @@ const port = require('./config').port || process.env.PORT,
     chalk = require('chalk'),
     ngAnnotate = require('gulp-ng-annotate'),
     concat = require('gulp-concat'),
-    order = require('gulp-order'),
-    del = require('del'),
-    sourcemaps = require('gulp-sourcemaps'),
-    babel = require('gulp-babel');
+    del = require('del');
 
 
 
@@ -48,7 +45,7 @@ function logError(message){
 
 //<=====INJECTING BOWER LIBRARIES=====>
 gulp.task('inject-bower', () => {
-    log("***INJECTING BOWER LIBRARIES***");
+    log("*** INJECTING BOWER LIBRARIES ***");
     let options = {};
     return gulp
         .src(config.index)
@@ -59,7 +56,7 @@ gulp.task('inject-bower', () => {
 
 
 //<===== RESTARTING SERVER =====>
-gulp.task("nodemon", (cb) => {
+gulp.task("nodemon", ['concat-angular'], (cb) => {
 
     // We use this `started` variable to make sure the callback is only executed once
     let started = false,
@@ -81,7 +78,7 @@ gulp.task("nodemon", (cb) => {
                 cb();
                 started = true;
             }
-            log("***STARTING NODE SERVER + " + new Date() + "***");
+            log("** *STARTING NODE SERVER + " + new Date() + " ***");
         })
         .on('restart', (files) => {
             log("*** RESTARTING NODE SERVER ON FILES CHANGES: " + files + " ***");
@@ -89,10 +86,10 @@ gulp.task("nodemon", (cb) => {
             browserSync.reload({stream: false});
         })
         .on('crash', () => {
-            logError("***NODE SERVER IS CRASHED***");
+            logError("*** NODE SERVER IS CRASHED ***");
         })
         .on('exit', () => {
-            logError("***FINISHING NODE SERVER ***");
+            logError("*** FINISHING NODE SERVER ***");
         })
 });
 
@@ -114,19 +111,18 @@ gulp.task("browser-sync", ['nodemon'], () => {
     log("*** BROWSER SYNC IS WORKING ***");
 });
 
-//<===== CONCATENATING ANGULAR AND COMPILING TO ES5 =====>
+//<===== CONCATENATING ANGULAR FILES =====>
 gulp.task('concat-angular', () => {
+
+    log("*** CONCATENATING ANGULAR FILES ***");
+
 
     //Cleaning the main app.js file before concatenation
     del.sync(['public/app/app.js']);
 
     return gulp.src(config.angular)
-        .pipe(sourcemaps.init())
-        .pipe(babel({
-            presets: ['es2015']
-        }))
         .pipe(ngAnnotate())
-        .pipe(concat('app.js'))
+        .pipe(concat('app.bundle.js'))
         .pipe(gulp.dest(config.client + config.app))
 });
 
