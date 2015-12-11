@@ -2,23 +2,21 @@
 "use strict";
 
 const config = require('./config'),
-    Scraper = require('./app/scraper'),
+    ScraperService = require('./app/scraperService'),
     express = require('express'),
     morgan = require('morgan'),
-    FileWorker = require('./app/fileWorker'),
+    FileService = require('./app/fileService'),
     bodyParser = require('body-parser'),
-    DataParser = require('./app/dataParser'),
+    DataService = require('./app/dataService'),
     path = require('path');
-
 
 
 //Initialize the app and needed modules
 const app = express(),
 
-    //Instance of FileWorker for working with the file where we store the data
-    fileWorker = new FileWorker(),
-    scraper = new Scraper(),
-    dataParser = new DataParser();
+    fileService = new FileService(),
+    scraperService = new ScraperService(config.options),
+    dataService = new DataService();
 
 
 //Parse application/x-www-form-urlencoded
@@ -37,37 +35,35 @@ app.use(express.static(__dirname  + '/public'));
 
 //Used for serving static bower_components
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
+
 //Scraper processing route
 app.post('/process', (req, res) => {
 
+    //Data from client - set of urls
     let urls = req.body;
 
-    scraper.scrapeData(urls, config.options).then( (data) => {
-        fileWorker.write(config.filename, dataParser.parse(data)).then((message) => {
-
-            //Success message to the client
-            res.json({
-                success: true,
-                message: message
-            });
-            }, (err) => {
-            res.json({
-                success: false,
-                message: err
-            })
-        })
-    }, (err) => {
-        res.json({
-            success: false,
-            message: err
-        })
-    })
+    scraperService.scrapeDataForMultipleUrls(urls)
+        .then((data) => {
+           return fileService.write(config.filename, dataService.edit(data));
+        }).then(
+            (message) => {
+                res.json({
+                    success: true,
+                    message: message
+                })},
+            (error) => {
+                res.json({
+                    success: false,
+                    error: error
+                });
+            }
+        )
 });
 
 //Scraper downloading route
 app.get('/download', (req, res) => {
 
-    let fileStream = fileWorker.createFileStream(config.filename);
+    let fileStream = fileService.createFileStream(config.filename);
 
     fileStream.on('error', (err) => {
         //Error handling

@@ -6,5 +6,5 @@ module.exports = {
         title: 'title',
         content : ['.entry-content p, .entry p, #content p, .art-postcontent p']
     },
-    filename: 'app/data.txt'
+    filename: 'app/data/data.txt'
 };

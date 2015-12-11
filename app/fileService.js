@@ -5,7 +5,7 @@
 let fs = require('fs');
 
 //Define the class FileWorker
-class FileWorker{
+class FileService{
 
     //Function that writes the data to the file
     write(filename, data){
@@ -33,4 +33,4 @@ class FileWorker{
     }
 }
 
-module.exports = FileWorker;
+module.exports = FileService;
