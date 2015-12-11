@@ -105,7 +105,10 @@ gulp.task("browser-sync", ['nodemon'], () => {
         files: [config.client + config.all],
 
         // This port should be different from the express app port
-        port: 7000
+        port: 7000,
+
+
+        browser: 'google chrome'
     });
 
     log("*** BROWSER SYNC IS WORKING ***");
