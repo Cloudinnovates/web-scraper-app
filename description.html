@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <title>WebScraper app description</title>
     <style>
-        /*Reset standard styles*/
+        /*Reset standard styles - Normalization*/
         ul{
             margin: 0;
             padding:0;
-            list-style: none;
             width: 100%;
             height: 100%;
         }
@@ -24,6 +23,10 @@
         img{
             max-width: 100%;
         }
+        hr{
+            margin: 0;
+        }
+
         /*Custom flexbox grid layout*/
         .flex-container{
             display: flex;
@@ -56,17 +59,12 @@
         .align-center{
             text-align: center;
         }
-        .align-right{
-            text-align: right;
-        }
         .align-vertical{
             align-self: center;
         }
 
 
-        .menu-item-active{
-            background: #2c2c2c;
-        }
+      /*Custom styles*/
         header{
             background-color: #CC181E;
         }
@@ -85,37 +83,158 @@
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             padding:20px 10px;
         }
-
-
-        section{
-            margin: 30px 0;
+        .menu-item-active{
+            background: #2c2c2c;
         }
+
+        main{
+            position: relative;
+        }
+        main section{
+            width: 1024px;
+            margin: 30px auto 0 auto;
+            position: absolute;
+            display: none;
+            left:0;
+            right:0;
+        }
+        main section p, main section h3, main section code, main section li{
+            padding:6px 15px;
+            font-size: 1em;
+            text-indent: 50px;
+            text-align: justify;
+        }
+        main section li p{
+            text-indent: 0;
+        }
+        #exploitation a.cta-button{
+            margin: 0 auto;
+        }
+        #authors li{
+            margin: 15px 0;
+        }
+
+        #exploitation p{
+            text-indent: 0;
+        }
+        #exploitation code{
+            text-indent: 50px;
+            padding: 7px;
+            background: #222;
+            color: #fff;
+            display: block;
+        }
+        #authors ul{
+            list-style: none;
+        }
+        #authors ul li{
+            text-align: left;
+        }
+        #authors a{
+            display: inline;
+            text-align: left;
+        }
+        .active-section{
+            display: block;
+        }
+        .cta-button{
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+            background: #CC181E;
+            width: 150px;
+            color: #fff;
+            font-size: 1.2em;
+            font-family: Roboto;
+        }
+
+        footer{
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        footer .copyright{
+            padding: 10px 0;
+        }
+
     </style>
 </head>
 <body>
     <header class="flex-container flex-row-reverse">
         <nav class="menu flex-2 flex-container flex-row">
-                <div  class="menu-item flex-1 align-vertical menu-item-active"><a href="#home">Головна</a></div>
-                <div  class="menu-item flex-1 align-vertical"><a href="#description">Про програму</a></div>
-                <div  class="menu-item flex-1 align-vertical"><a href="#exploitation">Інструкції</a></div>
-                <div  class="menu-item flex-1 align-vertical"><a href="#authors">Про авторів</a></div>
+                <div  onclick="showSection('home')" class="menu-item flex-1 align-vertical menu-item-active"><a href="#home">Головна</a></div>
+                <div  onclick="showSection('description')" class="menu-item flex-1 align-vertical"><a href="#description">Про програму</a></div>
+                <div  onclick="showSection('exploitation')" class="menu-item flex-1 align-vertical"><a href="#exploitation">Інструкції</a></div>
+                <div  onclick="showSection('authors')" class="menu-item flex-1 align-vertical"><a href="#authors">Про авторів</a></div>
         </nav>
     </header>
     <main>
-        <section id="home" class="align-center">
+        <section id="home" class="align-center active-section">
             <h1>Веб-додаток для скрапінгу сайтів</h1>
             <div class="main-picture">
                 <img src="http://the-city.kiev.ua/media/image/newslogo/14242093572-imgp8800-fb.jpg">
             </div>
+            <p>Метою даної графічно-розрахункової роботи було створення повноцінного універсального клієнт-серверного додатку для скрапінгу інформації з веб-сайтів кафедри СП. При цьому додаток легко масштабується під інші ресурси.
+                Для реалізації додатку був використаний сучасний стек технологій: для клієнта - AngularJS з його сучасними можливостями, для бек-енду - NodeJS. Увесь код написаний згідно стандартів ECMAScript 6 з використанням класів, промісів тощо. </p>
         </section>
-        <section id="description"></section>
-        <section id="exploitation"></section>
-        <section id="authors"></section>
+        <section id="description">
+            <p>Якщо веб-сервіс(багатосторінковий веб-сайт) не має власного API для того, щоб представити власні дані для зовнішніх користувачів, то єдиним способ їх отримання, є так званий веб-скрапінг.</p>
+            <p><strong>Веб-скрапінг</strong> - це процес здійснення кросдоменних запитів на сервери сайтів з метою аналізу вихідного коду цих сторінок, їхнього парсингу та отримання необхідних даних. </p>
+            <p>Застосування такого підходу має великий практичний зміст. Це може бути отримання останніх новин, аналіз даних, отримання статистичних результатів тощо. Але як це може допомогти викладачам великих сучасних університетів?</p>
+            <p>Розглянемо ситуацію, коли викладачу потрібно проаналізувати власний сайт кафедри, на якому розміщено десятки, а то і сотні наукових та дипломних робіт студентів та працівників Університету. Або навіть дізнатися інформацію про цих же ж студентів і працівників для того, щоб подати це у зручному вигляді. Тобто зробити протокол, звіт, біографічний опис і тд. Який же ж найоптимальніший вихід з такої ситуації?! </p>
+            <h3>Розглянемо можливі шляхи реалізації такого простого на перший погляд завдання.</h3>
+            <ul>
+                <li><p>Можна знайти інформацію у архівах або перебирати тонни документів з метою зробити цей протокол. Такий шлях довгий і складний, тому очевидно, що це не є рішенням такої проблеми. </p></li>
+                <li><p>Це завдання можна спростити, якщо аналізувати електронну базу замість друкованих документів, але знову ж таки, існує ризик втрати якоїсь важливої порції інформації і процес рутинного копіювання та вставки однотипного тексту робить такий процес непривабливим.</p></li>
+            </ul>
+            <p>Варто згадати, що основним джерелом інформації на сучасному етапі  є Інтернет. Тому сучасні заклади освіти мають тенденцію публікувати та розміщувати інформацію на веб-сайтах для того щоб ця інформація ставала загальнодоступною. При цьому спосіб завантаження таких даних на сторінки вже не є проблемою, якщо використовувати Системи керування контентом(CMS).</p>
+            <p>У такому випадку людині, яка буде робити звіт, достатньо відкрити такі сторінки за посиланнями у браузері і можна сміливо копіювати інформацію і записувати у протоколи. Уявімо на секунду, що таких сторінок може бути дуже багато або вони можуть змінюватися. Виникає потреба у автоматизації. </p>
+            <p>У браузерах для таких ситуацій використовуються скріпти, які легко і швидко реалізують такий функціонал для нас. Якщо піти далі, то можна реалізувати зручний веб інтерфейс для роботи клієнта, запис інформації у файли та можливість масштабувати функціонал на абсолютно інші потреби. Тому реалізація клієнт-серверного додатку з відповідним функціоналом стає універсальним рішенням такого роду проблем.</p>
+        </section>
+        <section id="exploitation">
+            <h3>Вихідний код програми розміщено у публічному репозиторії на GitHub.</h3>
+            <a class="cta-button" href="https://github.com/IvanDobrovolsky/web-scraper-app">Вихідний код</a>
+            <p>Для того щоб клонувати репозиторій достатньо набрати наступну команду:</p>
+            <code>git clone https://github.com/IvanDobrovolsky/web-scraper-app.git</code>
+            <p>Або достатньо скачати відповідний zip архів.</p>
+            <p>Системні вимоги:  <b> Необхідно мати встановленими node.js, npm, bower. </b></p>
+            <h3>Послідовність встановлення необхідних програм та засобів, запуск програми:</h3>
+            <ol>
+                <li><p>Скачуємо Node.js з офіційного сайту. </p></li>
+                <li><p>Встановлюємо необхідні модулі і пакети </p><code>sudo npm install -g bower</code></li>
+                <li><p>Встановлюємо серверні модулі для програми</p> <code>npm install</code></li>
+                <li><p>Встановлюємо клієнтські модулі для програми </p> <code>bower install</code></li>
+                <li><p>Запускаємо програму: </p><code>npm start</code></li>
+            </ol>
+        </section>
+        <section id="authors">
+            <div class="flex-container flex-column flex-4 ">
+                <div class="flex-4 flex-container">
+                    <div class="flex-1"><img src="http://cs622329.vk.me/v622329939/3a4e6/6QsA8GjA8Z0.jpg" style="max-width: 100%"></div>
+                    <div class="flex-3">
+                        <ul>
+                            <li><a class="cta-button" href="http://geekid.com.ua">Portfolio</a></li>
+                            <li><a class="cta-button" href="https://www.linkedin.com/profile/view?id=AAIAABfpm3ABGbUipO0dHSBfakXuk_HZLAeQlwo&trk=nav_responsive_tab_profile">LinkedIn</a></li>
+                            <li><a class="cta-button" href="https://www.facebook.com">Facebook</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex-4 flex-container">
+                    <div class="flex-1"><img src="https://pp.vk.me/c425523/v425523749/6e97/00TpXaGTRkw.jpg" style="max-width: 100%"></div>
+                    <div class="flex-3">
+                        <ul>
+                            <li><a class="cta-button" href="http://ua.linkedin.com/in/nmatkivska">LinkedIn</a></li>
+                            <li><a class="cta-button" href="https://www.facebook.com/natasha.matkivska">Facebook</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     <footer>
         <hr>
         <div class="copyright align-center">
-            Національний технічний університет України "Київський політехнічний інститут", 1998-2015 ©
+            Національний технічний університет України "Київський політехнічний інститут" 2015 ©
         </div>
     </footer>
 
@@ -123,22 +242,30 @@
         (function () {
             "use strict";
 
-            function clearClass(element, selector){
-                element.classList.remove(selector);
-            }
-
             var menuItems = document.getElementsByClassName('menu')[0].children;
 
+            //Functionality that switches menu tabs
             for(var i = 0; i < menuItems.length; i++){
                 menuItems[i].addEventListener('click', function () {
                    for(var j = 0; j < menuItems.length; j++){
-                           clearClass(menuItems[j], 'menu-item-active');
+                       menuItems[j].classList.remove('menu-item-active');
                    }
-                    console.log(this);
                    this.classList.add('menu-item-active');
                 })
             }
-        }())
+
+
+
+        }());
+
+        //Function that shows a section. Needs to be global
+        function showSection(sectionId){
+                var sections = document.querySelectorAll('main section');
+                for(var i = 0; i < sections.length; i++){
+                    sections[i].classList.remove('active-section');
+                }
+            document.getElementById(sectionId).classList.add('active-section');
+        }
     </script>
 </body>
 </html>
