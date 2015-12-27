@@ -89,7 +89,7 @@
 
         main{
             position: relative;
-	    	
+	    padding-bottom: 40px;	
         }
         main section{
             width: 1024px;
@@ -98,7 +98,6 @@
             display: none;
             left:0;
             right:0;
-            padding-bottom: 40px;		
         }
         main section p, main section h3, main section code, main section li{
             padding:6px 15px;
