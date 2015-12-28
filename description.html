@@ -168,6 +168,7 @@
                 <div  onclick="showSection('home')" class="menu-item flex-1 align-vertical menu-item-active"><a href="#home">Головна</a></div>
                 <div  onclick="showSection('description')" class="menu-item flex-1 align-vertical"><a href="#description">Про програму</a></div>
                 <div  onclick="showSection('exploitation')" class="menu-item flex-1 align-vertical"><a href="#exploitation">Інструкції</a></div>
+                <div  onclick="showSection('tests')" class="menu-item flex-1 align-vertical"><a href="#tests">Тести</a></div>
                 <div  onclick="showSection('authors')" class="menu-item flex-1 align-vertical"><a href="#authors">Про авторів</a></div>
         </nav>
     </header>
@@ -233,6 +234,53 @@
                 </div>
             </div>
         </section>
+        <section id="tests">
+            <div class="flex-container">
+                <div class="tests-form">
+                    <h2>Перевірка знань.</h2>
+                    <form>
+                        1. Що таке веб-скрапінг? <br>
+                        <input type="radio" name="1" data-result="correct" >а. техніка, за допомогою якої програма підключається до сервера і завантажує з нього код веб-сторінки, аналізуючи його заради отримання певних даних
+                        <br>
+                        <input type="radio" name="1" >б. техніка, за допомогою якої програма підключається до сервера і завантажує з нього код веб-сторінки, записуючи його на носії пам'яті задля оптимізації роботи сайту
+                        <br>
+                        <input type="radio" name="1" >в. техніка, за допомогої якої програма генерує текст для сайтів
+                        <br><br><br>
+                        2. Як розшифровується абревіатура Ajax?  <br>
+                        <input type="radio" name="2" value="" data-result="correct">а. Asynchronous JavaScript + XML
+                        <br>
+                        <input type="radio" name="2" value="">б. Asynchronous Java + XML
+                        <br>
+                        <input type="radio" name="2" value="">в. дане слово походить від грецького бога Аджакса і не має розшифрування
+                        <br><br><br>
+                        3. Для чого застосовується Ajax? <br>
+                        <input type="radio" name="3" value="">а. для побудови користувацьких інтерфейсів веб-застосунків, за яких веб-cайт являє собою безліч сторінок, які оптимізовано перезавантажуються у фоновому режимі
+                        <br>
+                        <input type="radio" name="3" value="">б. для побудови серверних частин, які надають швидкі відповіді на запити користувачів
+                        <br>
+                        <input type="radio" name="3" value="" data-result="correct">в. для побудови користувацьких інтерфейсів веб-застосунків, за яких веб-сторінка, не перезавантажуючись, у фоновому режимі надсилає запити на сервер і сама звідти довантажує потрібні користувачу дані
+                        <br><br><br>
+                        4. Чим відрізняється скрапінг від парсингу? <br>
+                        <input type="radio" name="4" value="">а. кінцевий результат представляється у вигляді, зрозумілому для кінцевого користувача
+                        <br>
+                        <input type="radio" name="4" value="">б. кінцевий результат представляється у вигляді, зрозумілому для опрацювання лише програмними засобами
+                        <br>
+                        <input type="radio" name="4" value="">в. ці технології не мають відмінностей у представленні, а лише в способі реалізації
+                        <br><br><br>
+                        5. Що таке XMLHttpRequest ? <br>
+                        <input type="radio" name="5" value="">а. API-запит веб-клієнта (браузера) до веб-сервера за протоколом HTTP у фоновому режимі
+                        <br>
+                        <input type="radio" name="5" value="">б. АРІ-запит між клієнтами за допомогою протоколу HTTP у активному режимі
+                        <br>
+                        <input type="radio" name="5" value="">в. API-запит веб-клієнта (браузера) до веб-сервера за протоколом HTTP у активному режимі
+                        <br><br><br>
+
+                        <hr>
+                    </form>
+                    <button style="padding: 10px; margin: 30px; text-align: center" onclick="checkTests()"></button>
+                </div>
+            </div>
+        </section>
     </main>
     <footer>
         <hr>
@@ -268,6 +316,19 @@
                     sections[i].classList.remove('active-section');
                 }
             document.getElementById(sectionId).classList.add('active-section');
+        }
+
+        //Function that checks
+        function checkTests(){
+            var inputs = document.getElementsByTagName('input');
+            var result = 0;
+            for(var i = 0; i < inputs.length; i++){
+                if(inputs[i].type === 'radio' && inputs[i].getAttribute('data-result') === 'correct' && inputs[i].checked){
+                    result++;
+                }
+            }
+            alert("Ви набрали: " + result*2 + "/10 балів.");
+            window.location.reload();
         }
     </script>
 </body>
